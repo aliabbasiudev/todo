@@ -24,9 +24,10 @@ export const AppProvider =({children})=>{
         localStorage.setItem('tasks', JSON.stringify(tasks))
     },[tasks, loaded])
 
- useEffect(()=>{
-    localStorage.setItem('theme',theme)
- },[theme]);
+useEffect(()=>{
+    if(!loaded) return
+    localStorage.setItem('theme', theme)
+},[theme, loaded])
 
  const addTasks =(tasks)=>{
     setTasks(prev => [...prev,{...tasks,id:Date.now(), sessions: 0}])
