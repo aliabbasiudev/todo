@@ -13,7 +13,7 @@ export const useTimer = (duration, onComplete) => {
                 if (prev <= 1) {
                     clearInterval(intervalRef.current)
                     setIsRunning(false)
-                    if(onComplete) onComplete()
+                    if(onComplete) setTimeout(onComplete, 0)
                     return 0
                 }
                 return prev - 1
@@ -30,6 +30,7 @@ export const useTimer = (duration, onComplete) => {
     const pause = useCallback(() => {
         clearInterval(intervalRef.current)
     }, [])
+
     useEffect(() => {
         setTimerLeft(duration * 60)
     }, [duration])
