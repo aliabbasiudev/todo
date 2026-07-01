@@ -14,10 +14,14 @@ const TaskList = () => {
       <h2 className="text-[#6C63FF] font-bold text-base sm:text-xl mb-4">تسک‌ها</h2>
       <div className="flex flex-col gap-2 sm:gap-3">
         {tasks.map(task => (
-          <div key={task.id} className={`flex justify-between items-center p-3 sm:p-4 rounded-xl border transition-colors ${theme === 'dark' ? 'border-[#6C63FF33] hover:border-[#6C63FF]' : 'border-[#6C63FF22] hover:border-[#6C63FF]'}`}>
+     <div key={task.id} className={`flex justify-between items-center p-3 sm:p-4 rounded-xl border transition-colors ${theme === 'dark' ? 'border-[#6C63FF33] hover:border-[#6C63FF] hover:bg-[#6C63FF11]' : 'border-[#6C63FF22] hover:border-[#6C63FF] hover:bg-[#6C63FF08]'}`}>
             <div>
               <p className="font-bold text-sm sm:text-base">{task.title}</p>
-              <p className="text-xs sm:text-sm text-[#6C63FF]">{task.time} دقیقه | {task.sessions} بار انجام شده</p>
+                 <p className={`text-xs sm:text-sm flex gap-2 mt-1 ${theme === 'dark' ? 'text-[#E8E8E8]' : 'text-gray-500'}`}>
+                     <span>⏱ {task.time} دقیقه</span>
+                          <span>|</span>
+                     <span>🔁 {task.sessions} تعداد تکارا</span>
+                  </p>
             </div>
             <button
               onClick={() => deleteTask(task.id)}

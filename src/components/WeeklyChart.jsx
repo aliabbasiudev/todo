@@ -33,7 +33,14 @@ const WeeklyChart = () => {
           <BarChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <XAxis dataKey="name" tick={{ fontSize: 11 }} stroke={theme === 'dark' ? '#E8E8F0' : '#1A1A2E'} />
             <YAxis tick={{ fontSize: 12 }} stroke={theme === 'dark' ? '#E8E8F0' : '#1A1A2E'} />
-            <Tooltip />
+              <Tooltip
+                 contentStyle={{
+                 backgroundColor: theme === 'dark' ? '#1A1A2E' : 'white',
+                 border: '1px solid #6C63FF',
+                 borderRadius: '8px',
+                 color: theme === 'dark' ? '#E8E8F0' : '#1A1A2E'
+                               }}
+             />
             <Bar dataKey="sessions" fill="#6C63FF" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>

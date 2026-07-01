@@ -24,12 +24,20 @@ const handleInsight = async () => {
       <h1 className="text-2xl sm:text-3xl font-bold text-[#6C63FF]">داشبورد</h1>
       
       <div className={`rounded-2xl p-4 sm:p-6 shadow-lg ${theme === 'dark' ? 'bg-[#1A1A2E]' : 'bg-white'}`}>
-        <h2 className="text-[#6C63FF] font-bold text-base sm:text-xl mb-4">کل سشن‌ها</h2>
+        <h2 className="text-[#6C63FF] font-bold text-base sm:text-xl mb-4">کل دفعات انجام شده</h2>
         <ResponsiveContainer width="100%" height={250}>
           <BarChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke={theme === 'dark' ? '#E8E8F0' : '#1A1A2E'} />
             <YAxis tick={{ fontSize: 12 }} stroke={theme === 'dark' ? '#E8E8F0' : '#1A1A2E'} />
-            <Tooltip />
+            <Tooltip
+            cursor={{ fill: 'rgba(108, 99, 255, 0.1)' }}
+                 contentStyle={{
+                 backgroundColor: theme === 'dark' ? '#1A1A2E' : 'white',
+                 border: '1px solid #6C63FF',
+                 borderRadius: '8px',
+                 color: theme === 'dark' ? '#E8E8F0' : '#1A1A2E'
+                               }}
+             />
             <Bar dataKey="sessions" fill="#6C63FF" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
