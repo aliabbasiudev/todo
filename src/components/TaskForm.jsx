@@ -10,10 +10,10 @@ const schema = z.object({
 
 const TaskForm = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm({ resolver: zodResolver(schema) });
-  const { addTasks, theme } = useApp()
+  const { addTask, theme } = useApp()
 
   const onSubmit = (data) => {
-    addTasks(data)
+    addTask(data)
     reset()
   }
 

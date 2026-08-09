@@ -29,11 +29,17 @@ export const useTimer = (duration, onComplete) => {
     
     const pause = useCallback(() => {
         clearInterval(intervalRef.current)
+        setIsRunning(false)
     }, [])
 
     useEffect(() => {
         setTimerLeft(duration * 60)
     }, [duration])
- 
-    return { timerLeft, pause, timer, reset }
+
+   
+    useEffect(() => {
+        return () => clearInterval(intervalRef.current)
+    }, [])
+
+    return { timerLeft, pause, timer, reset, isRunning }
 }

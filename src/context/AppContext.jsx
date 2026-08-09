@@ -29,8 +29,9 @@ useEffect(()=>{
     localStorage.setItem('theme', theme)
 },[theme, loaded])
 
- const addTasks =(tasks)=>{
-    setTasks(prev => [...prev,{...tasks,id:Date.now(), sessions: 0}])
+
+ const addTask =(task)=>{
+    setTasks(prev => [...prev,{...task,id:Date.now(), sessions: 0}])
 
  };
 
@@ -56,7 +57,7 @@ useEffect(()=>{
 }
 
 return (
-    <AppContext.Provider value={{tasks,addTasks,deleteTask,theme,toggleTheme ,incrementSession}}>
+    <AppContext.Provider value={{tasks,addTask,deleteTask,theme,toggleTheme,incrementSession,loaded}}>
         {children}
     </AppContext.Provider>
 )    

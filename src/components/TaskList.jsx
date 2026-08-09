@@ -1,7 +1,17 @@
 import { useApp } from "../context/AppContext";
 
 const TaskList = () => {
-  const { tasks, deleteTask, theme } = useApp()
+  const { tasks, deleteTask, theme, loaded } = useApp()
+
+  const handleDelete = (id, title) => {
+    if (window.confirm(`مطمئنی می‌خوای "${title}" رو حذف کنی؟`)) {
+      deleteTask(id)
+    }
+  }
+
+  // تا وقتی localStorage خونده نشده، به‌جای نشون دادن "هنوز تسکی نداری"
+  // (که ممکنه غلط باشه و لحظه‌ای بعد جایگزین بشه)، چیزی نشون نمی‌دیم
+  if (!loaded) return null
 
   if (tasks.length === 0) return (
     <div className={`rounded-2xl p-4 sm:p-6 shadow-lg text-center transition-colors duration-300 ${theme === 'dark' ? 'bg-[#1A1A2E] text-[#E8E8F0]' : 'bg-white text-[#1A1A2E]'}`}>
@@ -20,11 +30,11 @@ const TaskList = () => {
                  <p className={`text-xs sm:text-sm flex gap-2 mt-1 ${theme === 'dark' ? 'text-[#E8E8E8]' : 'text-gray-500'}`}>
                      <span>⏱ {task.time} دقیقه</span>
                           <span>|</span>
-                     <span>🔁 {task.sessions} تعداد تکارا</span>
+                     <span>🔁 {task.sessions} تعداد تکرارها</span>
                   </p>
             </div>
             <button
-              onClick={() => deleteTask(task.id)}
+              onClick={() => handleDelete(task.id, task.title)}
               className="text-red-400 hover:text-red-600 transition-colors text-lg sm:text-xl p-1"
             >
               ✕

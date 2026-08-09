@@ -1,16 +1,66 @@
-# React + Vite
+# ⏱️ Focus Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+اپ مدیریت وظایف و تمرکز، ساخته‌شده با React — کاربر تسک تعریف می‌کنه، با یه تایمر Pomodoro-style روش کار می‌کنه، پیشرفتش رو با نمودار می‌بینه، و می‌تونه از AI بخواد عملکردش رو تحلیل کنه.
 
-Currently, two official plugins are available:
+**دمو:** https://todo-lake-one-46.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ ویژگی‌ها
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ⏳ **تایمر تمرکز** — هر تسک مدت‌زمان خودش رو داره، با شروع/توقف و نشانگر بصری وضعیت
+- ✅ **مدیریت تسک** — اضافه/حذف تسک با validation کامل (Zod + React Hook Form)
+- 📊 **نمودار پیشرفت** — تعداد سشن‌های هر تسک و روند ۷ روز اخیر (Recharts)
+- 🤖 **تحلیل با AI** — Gemini عملکرد کاربر رو تحلیل می‌کنه، با افکت نمایش تدریجی (streaming-style) به‌جای نمایش یهویی
+- 🌗 **دارک مود** — پایدار بین رفرش‌ها
+- 💾 **ذخیره‌ی محلی** — تسک‌ها و تنظیمات با localStorage پایدار می‌مونن، بدون نیاز به بک‌اند
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🚀 تکنولوژی‌ها
+
+| بخش | ابزار |
+|---|---|
+| فریم‌ورک | React + Vite |
+| Routing | React Router DOM |
+| State | Context API |
+| فرم/اعتبارسنجی | React Hook Form + Zod |
+| نمودار | Recharts |
+| استایل | Tailwind CSS |
+| AI | Gemini API (از طریق یه serverless function) |
+
+---
+
+## 🏗️ نکات معماری
+
+**چرا Context API و نه Zustand؟**
+برای این‌سایز پروژه (یه state درخت ساده: تسک‌ها + تم)، Context API بدون نیاز به یه dependency اضافه کافیه. تو پروژه‌های دیگه‌م (مثل Any Store) که state پیچیده‌تر و چندلایه‌تری داشتم، از Zustand استفاده کردم.
+
+**چرا فراخوانی Gemini سمت سرور انجام می‌شه؟**
+کلید API (`GEMINI_API_KEY`) هیچ‌وقت نباید تو کد کلاینت باشه، وگرنه هرکسی که Network tab مرورگر رو باز کنه می‌تونه بدزدتش. برای همین یه serverless function (`api/gemini.js`) واسط بین کلاینت و Gemini قرار می‌گیره.
+
+**چرا "streaming" شبیه‌سازی‌شده‌ست، نه واقعی؟**
+اندپوینت Gemini که استفاده می‌شه (`generateContent`) کل پاسخ رو یه‌جا برمی‌گردونه، نه به‌صورت stream واقعی. برای این‌که تجربه‌ی کاربری شبیه ابزارهای AI مدرن (مثل ChatGPT) باشه، بعد از دریافت پاسخ کامل، متن رو کلمه‌به‌کلمه با تأخیر نمایش می‌دیم — یه شبیه‌سازی سمت کلاینت، نه streaming واقعی HTTP.
+
+---
+
+## 🔧 راه‌اندازی
+
+```bash
+npm install
+npm run dev
+```
+
+برای فعال شدن تحلیل AI، یه متغیر محیطی لازمه (تو `.env` محلی یا تنظیمات Vercel):
+
+```
+GEMINI_API_KEY=your_key_here
+```
+
+---
+
+## 🔮 بهبودهای ممکن
+
+- ذخیره‌ی تسک‌ها تو یه دیتابیس به‌جای فقط localStorage (تا بین دستگاه‌ها هم‌گام بمونه)
+- محدودیت نرخ درخواست (rate limiting) روی endpoint تحلیل AI
+- تست واحد برای `useTimer` و منطق استریم

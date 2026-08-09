@@ -6,7 +6,7 @@ const Timer = () => {
   const { theme, tasks, incrementSession } = useApp()
   const [selectedTask, setSelectedTask] = useState(null)
   const selected = tasks.find(task => task.id === Number(selectedTask))
-  const { timer, pause, timerLeft, reset } = useTimer(
+  const { timer, pause, timerLeft, reset, isRunning } = useTimer(
     selected?.time || 25,
     () => { if (selectedTask) incrementSession(Number(selectedTask)) }
   )
@@ -26,21 +26,26 @@ const Timer = () => {
         ))}
       </select>
 
-      <div className="text-5xl sm:text-7xl font-bold text-[#6C63FF] mb-6 sm:mb-8 tracking-widest">
-        {selectedTask ? `${minutes}:${seconds}` : '00:00'}
+      <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
+        <div className="text-5xl sm:text-7xl font-bold text-[#6C63FF] tracking-widest">
+          {selectedTask ? `${minutes}:${seconds}` : '00:00'}
+        </div>
+        {isRunning && (
+          <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" title="در حال اجرا" />
+        )}
       </div>
 
       <div className="flex gap-3 sm:gap-4 justify-center">
         <button
           onClick={timer}
-          disabled={!selectedTask}
+          disabled={!selectedTask || isRunning}
           className="px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base bg-[#6C63FF] text-white rounded-xl font-bold hover:bg-[#5a52e0] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           شروع
         </button>
         <button
           onClick={pause}
-          disabled={!selectedTask}
+          disabled={!selectedTask || !isRunning}
           className={`px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl font-bold border-2 border-[#6C63FF] transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${theme === 'dark' ? 'text-[#E8E8F0]' : 'text-[#1A1A2E]'}`}
         >
           توقف
